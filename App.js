@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { WalletList } from "./src/infrastructure/wallet-list";
 import { BookList } from "./src/infrastructure/book-list";
+import { ProfileList } from "./src/infrastructure/profile-list";
 import { NavigationContainer } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
@@ -67,7 +68,7 @@ export default function App() {
           <Tab.Screen name="Wallet" component={WalletList} />
 
           <Tab.Screen name="Book" component={BookList} />
-          <Tab.Screen name="Profile" component={Profiles} />
+          <Tab.Screen name="Profile" component={ProfileList} />
         </Tab.Navigator>
       </SafeAreaView>
       <ExpoStatusBar style="auto" />

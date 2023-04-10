@@ -12,8 +12,8 @@ export const BuyNews = () => {
           <View style={styles.circle}></View>
         </View>
         <View style={styles.rightContent}>
-          <Text>$100</Text>
-          <Text>0.02</Text>
+          <Text>What is Polygon</Text>
+          <Text>BEGINNER GUIDE</Text>
         </View>
       </View>
 
@@ -22,8 +22,8 @@ export const BuyNews = () => {
           <View style={styles.circle}></View>
         </View>
         <View style={styles.rightContent}>
-          <Text>$0.012345</Text>
-          <Text>0.02</Text>
+          <Text>What is Bitcoin</Text>
+          <Text>BEGINNER GUIDE</Text>
         </View>
       </View>
       <View style={styles.container}>
@@ -31,8 +31,8 @@ export const BuyNews = () => {
           <View style={styles.circle}></View>
         </View>
         <View style={styles.rightContent}>
-          <Text>$0.989</Text>
-          <Text>0.00</Text>
+          <Text>What is Tether</Text>
+          <Text>BEGINNER GUIDE</Text>
         </View>
       </View>
     </>
