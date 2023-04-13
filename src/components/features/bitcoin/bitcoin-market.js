@@ -1,14 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native";
 
 export const BitcoinMarket = ({ crypto }) => {
-  const navigation = useNavigation();
-  const handlePress = () => {
-    navigation.navigate("CoinDetails", { id: crypto.id });
-  };
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <ScrollView>
       <View style={styles.container}>
         <View style={styles.leftContent}>
           <Image source={{ uri: crypto.image }} style={styles.circle} />
@@ -22,7 +19,7 @@ export const BitcoinMarket = ({ crypto }) => {
           <Text>{crypto.high_24h}</Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({

@@ -10,13 +10,16 @@ import {
 import { useContext } from "react";
 import { CoinContext } from "../../services/coin/coin.context";
 import { BitcoinMarket } from "../../components/features/bitcoin/bitcoin-market";
+import { useNavigation } from "@react-navigation/native";
 
-export const BitcoinMarketList = ({ navigation }) => {
+export const BitcoinMarketList = () => {
+  const navigation = useNavigation();
   const { cryptoData } = useContext(CoinContext);
   //
 
   const handleCryptoPress = (id) => {
     navigation.navigate("CoinDetails", { id });
+    const crypto = cryptoData?.find((item) => item.id == id);
   };
 
   const renderItem = ({ item }) => (
@@ -31,7 +34,7 @@ export const BitcoinMarketList = ({ navigation }) => {
         <Text style={styles.marketHeaderLink}>View All</Text>
       </View>
       <FlatList
-        data={cryptoData.splice(0, 3)}
+        data={cryptoData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />

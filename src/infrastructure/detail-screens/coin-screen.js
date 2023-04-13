@@ -1,17 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
+import { useContext } from "react";
+import { CoinContext } from "../../services/coin/coin.context";
 
 export const CoinDetails = ({ route }) => {
-  const { crypto } = route.params;
-  console.log("why me", crypto);
+  const id = route?.params.id;
+  console.log("helo", id);
+  console.log(typeof id);
 
-  // if (!crypto) {
-  //   return (
-  //     <View style={styles.errorContainer}>
-  //       <Text style={styles.errorText}>Crypto data not available</Text>
-  //     </View>
-  //   );
-  // }
+  const { cryptoData } = useContext(CoinContext);
+  console.log(cryptoData[0]);
+
+  const crypto = cryptoData?.find((item) => item.id == id);
 
   return (
     <>
@@ -21,15 +21,18 @@ export const CoinDetails = ({ route }) => {
             <View>
               <View style={styles.btcContainer}>
                 <View style={styles.textbtc}>
-                  <Image style={styles.circle}></Image>
+                  <Image
+                    source={{ uri: crypto.image }}
+                    style={styles.circle}
+                  ></Image>
                   <Text style={styles.textletter}>{crypto?.symbol}</Text>
                 </View>
               </View>
-              <Text style={styles.textsize}>$ 21,8990</Text>
+              <Text style={styles.textsize}>$ {crypto.current_price}</Text>
             </View>
           </View>
           <View style={styles.rightContainer}>
-            <Text style={styles.percentage}>2.3%</Text>
+            <Text style={styles.percentage}>{crypto.atl}</Text>
           </View>
         </View>
         <View style={styles.profile}>
@@ -38,7 +41,7 @@ export const CoinDetails = ({ route }) => {
               <Text style={styles.label}>Current Price:</Text>
             </View>
             <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>{crypto.current_price}$</Text>
+              <Text>{crypto?.current_price} $</Text>
             </View>
           </View>
           <View style={styles.row}>
@@ -46,7 +49,7 @@ export const CoinDetails = ({ route }) => {
               <Text style={styles.label}>Market Price:</Text>
             </View>
             <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>897,2895 $</Text>
+              <Text>{crypto.market_cap}</Text>
             </View>
           </View>
           <View style={styles.row}>
@@ -54,15 +57,15 @@ export const CoinDetails = ({ route }) => {
               <Text style={styles.label}>Volume24h:</Text>
             </View>
             <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>870,2895 $</Text>
+              <Text>{crypto.total_volume} $</Text>
             </View>
           </View>
           <View style={styles.row}>
             <View style={[styles.column, { alignItems: "flex-start" }]}>
-              <Text style={styles.label}>Available Supply:</Text>
+              <Text style={styles.label}>Total Supply:</Text>
             </View>
             <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>90,2895 $</Text>
+              <Text>{crypto.total_supply}</Text>
             </View>
           </View>
           <View style={styles.row}>
@@ -70,7 +73,7 @@ export const CoinDetails = ({ route }) => {
               <Text style={styles.label}>Max Supply:</Text>
             </View>
             <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>90,2895 $</Text>
+              <Text>{crypto.max_supply} </Text>
             </View>
           </View>
         </View>
