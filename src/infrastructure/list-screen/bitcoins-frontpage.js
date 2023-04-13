@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { BitcoinCard } from "../components/features/bitcoin/bitcoin-card";
-import { BitcoinCardList } from "../components/features/bitcoin/bitcoin-list-card";
-import { BitcoinPortFolio } from "../components/features/bitcoin/bitcoin-portfolio";
-import { BitcoinMarket } from "../components/features/bitcoin/bitcoin-market";
+import { BitcoinCard } from "../../components/features/bitcoin/bitcoin-card";
+import { BitcoinCardList } from "../../components/features/bitcoin/bitcoin-list-card";
+import { BitcoinPortFolio } from "../../components/features/bitcoin/bitcoin-portfolio";
+import { BitcoinMarketList } from "./bitcoin-market";
 
 export default BitcoinFrontpage = () => {
   return (
@@ -32,13 +32,7 @@ export default BitcoinFrontpage = () => {
       </View>
 
       {/* Market section */}
-      <View style={styles.marketSection}>
-        <View style={styles.marketHeader}>
-          <Text style={styles.marketHeaderText}>Market</Text>
-          <Text style={styles.marketHeaderLink}>View All</Text>
-        </View>
-        <BitcoinMarket />
-      </View>
+      <BitcoinMarketList />
     </View>
   );
 };
@@ -89,25 +83,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   portfolioHeaderLink: {
-    color: "#007aff",
-    fontSize: 16,
-  },
-  marketSection: {
-    marginHorizontal: 16,
-    marginVertical: -8,
-  },
-  marketHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginHorizontal: 16,
-    marginBottom: 8,
-  },
-  marketHeaderText: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  marketHeaderLink: {
     color: "#007aff",
     fontSize: 16,
   },

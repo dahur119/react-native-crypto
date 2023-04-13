@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Wallet } from "../components/features/wallet/wallet-history";
-import { WalletSearch } from "../components/features/wallet/wallet-search";
-import { WalletBalance } from "../components/features/wallet/wallet-balance";
+import { Wallet } from "../../components/features/wallet/wallet-history";
+import { WalletBalance } from "../../components/features/wallet/wallet-balance";
+import { WalletSearch } from "../../components/features/wallet/wallet-search";
 
 export const WalletList = () => {
   return (

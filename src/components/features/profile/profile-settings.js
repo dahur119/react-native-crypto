@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    borderBottomWidth: 6,
+    borderBottomWidth: 3,
     borderBottomColor: "#ccc",
     paddingVertical: 10,
     paddingHorizontal: 16,

@@ -1,13 +1,19 @@
 import React from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { SafeAreaView, StatusBar, View, Text } from "react-native";
-import BitcoinsFrontpage from "./src/infrastructure/bitcoins-frontpage";
+import BitcoinsFrontpage from "./src/infrastructure/list-screen/bitcoins-frontpage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { WalletList } from "./src/infrastructure/wallet-list";
-import { BookList } from "./src/infrastructure/book-list";
-import { ProfileList } from "./src/infrastructure/profile-list";
+import { WalletList } from "./src/infrastructure/list-screen/wallet-list";
+import { BookList } from "./src/infrastructure/list-screen/book-list";
+import { ProfileList } from "./src/infrastructure/list-screen/profile-list";
 import { NavigationContainer } from "@react-navigation/native";
+import { CoinDetails } from "./src/infrastructure/detail-screens/coin-screen";
+import { CoinBalanceHistory } from "./src/infrastructure/detail-screens/coin-balannce-history";
+import { CoinContextProvider } from "./src/services/coin/coin.context";
+import { TrendingContextProvider } from "./src/services/coin/trending.coin";
+import { CoinNavigation } from "./src/navigation/market-navigation";
+import { WalletNavigation } from "./src/navigation/wallet-navigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,6 +49,10 @@ const screenOptions = ({ route }) => {
     iconName = "book";
   } else if (route.name === "Profile") {
     iconName = "account";
+  } else if (route.name === "Profil") {
+    iconName = "account";
+  } else if (route.name === "Profiles") {
+    iconName = "account";
   }
   iconColor =
     route.name === "Home"
@@ -58,20 +68,34 @@ const screenOptions = ({ route }) => {
 export default function App() {
   const statusBarHeight = StatusBar.currentHeight;
   return (
-    <NavigationContainer>
-      <SafeAreaView style={{ flex: 1, paddingTop: statusBarHeight }}>
-        <Tab.Navigator
-          tabBarOptions={tabBarOptions}
-          screenOptions={screenOptions}
-        >
-          <Tab.Screen name="Home" component={BitcoinsFrontpage} />
-          <Tab.Screen name="Wallet" component={WalletList} />
+    <TrendingContextProvider>
+      <CoinContextProvider>
+        <NavigationContainer>
+          <SafeAreaView style={{ flex: 1, paddingTop: statusBarHeight }}>
+            <Tab.Navigator
+              screenOptions={screenOptions}
+              tabBarOptions={{
+                showLabel: false,
+              }}
+            >
+              <Tab.Screen
+                name="Home"
+                component={CoinNavigation}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Wallet"
+                component={WalletNavigation}
+                options={{ headerShown: false }}
+              />
 
-          <Tab.Screen name="Book" component={BookList} />
-          <Tab.Screen name="Profile" component={ProfileList} />
-        </Tab.Navigator>
-      </SafeAreaView>
-      <ExpoStatusBar style="auto" />
-    </NavigationContainer>
+              <Tab.Screen name="Book" component={BookList} />
+              <Tab.Screen name="Profile" component={ProfileList} />
+            </Tab.Navigator>
+          </SafeAreaView>
+          <ExpoStatusBar style="auto" />
+        </NavigationContainer>
+      </CoinContextProvider>
+    </TrendingContextProvider>
   );
 }

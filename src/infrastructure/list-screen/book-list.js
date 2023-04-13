@@ -1,9 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { BookSearch } from "../components/features/books/book-search";
-import { BookBuy } from "../components/features/books/book-buy";
-import { BuyNews } from "../components/features/books/buy-news";
+import { BookSearch } from "../../components/features/books/book-search";
+import { BookBuy } from "../../components/features/books/book-buy";
+import { BuyNews } from "../../components/features/books/buy-news";
+import { useContext } from "react";
+import { CoinContext } from "../../services/coin/coin.context";
+
 export const BookList = () => {
+  const { coin } = useContext(CoinContext);
+  console.log("hello", coin);
   return (
     <View style={styles.container}>
       <View style={styles.cardSection}>

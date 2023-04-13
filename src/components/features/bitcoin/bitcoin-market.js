@@ -1,50 +1,28 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export const BitcoinMarket = () => {
+export const BitcoinMarket = ({ crypto }) => {
+  const navigation = useNavigation();
+  const handlePress = () => {
+    navigation.navigate("CoinDetails", { id: crypto.id });
+  };
   return (
-    <ScrollView>
+    <TouchableOpacity onPress={handlePress}>
       <View style={styles.container}>
         <View style={styles.leftContent}>
-          <View style={styles.circle}></View>
+          <Image source={{ uri: crypto.image }} style={styles.circle} />
           <View>
-            <Text>Tether</Text>
-            <Text>USDT</Text>
+            <Text>{crypto.name}</Text>
+            <Text>{crypto.symbol}</Text>
           </View>
         </View>
         <View style={styles.rightContent}>
-          <Text>$100</Text>
-          <Text>0.02</Text>
+          <Text>${crypto.current_price}</Text>
+          <Text>{crypto.high_24h}</Text>
         </View>
       </View>
-
-      <View style={styles.container}>
-        <View style={styles.leftContent}>
-          <View style={styles.circle}></View>
-          <View>
-            <Text>Polygon</Text>
-            <Text>Matic</Text>
-          </View>
-        </View>
-        <View style={styles.rightContent}>
-          <Text>$0.012345</Text>
-          <Text>0.02</Text>
-        </View>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.leftContent}>
-          <View style={styles.circle}></View>
-          <View>
-            <Text>Shallionill</Text>
-            <Text>USDT</Text>
-          </View>
-        </View>
-        <View style={styles.rightContent}>
-          <Text>$0.989</Text>
-          <Text>0.00</Text>
-        </View>
-      </View>
-    </ScrollView>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

@@ -1,25 +1,34 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export const Wallet = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.leftView}>
-        <Text style={styles.name}>current wallet balance</Text>
+  const navigation = useNavigation();
 
-        <Text style={styles.description}>$25,3720</Text>
-        <View style={styles.signal}>
-          <Text style={styles.marketprice}>Btc:0.003</Text>
-          <Text style={styles.marketcap}>+32.0</Text>
+  function handlePress() {
+    navigation.navigate("CoinBalanceHistoryDetails");
+  }
+
+  return (
+    <TouchableOpacity onPress={handlePress}>
+      <View style={styles.container}>
+        <View style={styles.leftView}>
+          <Text style={styles.name}>current wallet balance</Text>
+
+          <Text style={styles.description}>$25,3720</Text>
+          <View style={styles.signal}>
+            <Text style={styles.marketprice}>Btc:0.003</Text>
+            <Text style={styles.marketcap}>+32.0</Text>
+          </View>
+        </View>
+        <View style={styles.rightView}>
+          <View style={styles.roundedCircle}>
+            <Text style={styles.circle}>circle</Text>
+            <Text>history</Text>
+          </View>
         </View>
       </View>
-      <View style={styles.rightView}>
-        <View style={styles.roundedCircle}>
-          <Text style={styles.circle}>circle</Text>
-          <Text>history</Text>
-        </View>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

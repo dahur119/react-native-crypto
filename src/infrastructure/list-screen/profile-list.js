@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Profile } from "../components/features/profile/profile-pics";
-import { ProfileSettings } from "../components/features/profile/profile-settings";
+import { Profile } from "../../components/features/profile/profile-pics";
+import { ProfileSettings } from "../../components/features/profile/profile-settings";
 
 export const ProfileList = () => {
   return (

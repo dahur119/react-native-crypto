@@ -1,16 +1,14 @@
 import React from "react";
 
 import { View, Text, StyleSheet } from "react-native";
+import { TrendingCoin } from "./trending-coin";
 
 export const BitcoinCard = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>current wallet balance</Text>
       <Text style={styles.description}>$25,3720</Text>
-      <View style={styles.signal}>
-        <Text style={styles.marketprice}>Btc:0.003</Text>
-        <Text style={styles.marketcap}>+32.0</Text>
-      </View>
+
       <View style={styles.transaction}>
         <View style={styles.transcationbuy}>
           <View style={styles.send}></View>
@@ -53,16 +51,7 @@ const styles = StyleSheet.create({
     color: "#666",
     paddingBottom: 5,
   },
-  signal: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  marketprice: {
-    marginRight: 10,
-  },
-  marketcap: {
-    marginRight: 10,
-  },
+
   transaction: {
     marginTop: 10,
     flexDirection: "row",
