@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { View, StyleSheet, Text } from "react-native";
+import { TrendingContext } from "../../../services/coin/trending.coin";
+import { useContext } from "react";
+import { CurrentRenderContext } from "@react-navigation/native";
 
 export const BookBuy = () => {
   return (

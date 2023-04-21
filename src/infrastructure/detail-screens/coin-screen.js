@@ -1,86 +1,142 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { useContext } from "react";
-import { CoinContext } from "../../services/coin/coin.context";
+import { TrendingContext } from "../../services/coin/trending.coin";
+import { useState } from "react";
+import { ScrollView } from "react-native";
+import FastImage from "react-native-fast-image";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export const CoinDetails = ({ route }) => {
-  const id = route?.params.id;
-  console.log("helo", id);
-  console.log(typeof id);
+  const { coinId } = route.params;
+  const { fetchCoinDescription, coinList } = useContext(TrendingContext);
+  const [coinData, setCoinData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const { cryptoData } = useContext(CoinContext);
-  console.log(cryptoData[0]);
+  useEffect(() => {
+    const fetchCoinData = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchCoinDescription(coinId);
+        console.log(data);
+        setCoinData(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        setError(error.message);
+      }
+    };
+    fetchCoinData();
+  }, [coinId]);
 
-  const crypto = cryptoData?.find((item) => item.id == id);
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Spinner
+          visible={true}
+          textContent={"Loading..."}
+          textStyle={{ color: "#FFF" }}
+        />
+      </View>
+    );
+  }
 
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>Error: {error}</Text>
+      </View>
+    );
+  }
   return (
     <>
-      <View const style={styles.paddingContainer}>
-        <View style={styles.container}>
-          <View style={styles.leftContainer}>
-            <View>
-              <View style={styles.btcContainer}>
-                <View style={styles.textbtc}>
-                  <Image
-                    source={{ uri: crypto.image }}
-                    style={styles.circle}
-                  ></Image>
-                  <Text style={styles.textletter}>{crypto?.symbol}</Text>
+      <ScrollView>
+        <View const style={styles.paddingContainer}>
+          <View style={styles.container}>
+            <View style={styles.leftContainer}>
+              <View>
+                <View style={styles.btcContainer}>
+                  <View style={styles.textbtc}>
+                    <Image
+                      source={{
+                        uri: coinData?.image?.small || "default_image_url",
+                      }}
+                      style={styles.circle}
+                      resizeMode="cover"
+                      onLoad={() => console.log("Image loaded successfully")}
+                      onError={() => console.log("Image load failed")} // Add onError event handler
+                    />
+
+                    <Text style={styles.textletter}>{coinData.symbol}</Text>
+                  </View>
                 </View>
+                <Text style={styles.textsize}>
+                  $ {coinData.market_data.current_price.usd}
+                </Text>
               </View>
-              <Text style={styles.textsize}>$ {crypto.current_price}</Text>
+            </View>
+            <View style={styles.rightContainer}>
+              <Text style={styles.percentage}>
+                {coinData && coinData.atl ? coinData.atl : "N/A"}
+              </Text>
             </View>
           </View>
-          <View style={styles.rightContainer}>
-            <Text style={styles.percentage}>{crypto.atl}</Text>
+
+          <View>
+            <Text>
+              {coinData && coinData.description && coinData.description.en}
+            </Text>
+          </View>
+
+          <View>
+            <View style={styles.row}>
+              <View style={[styles.column, { alignItems: "flex-start" }]}>
+                <Text style={styles.label}>Current Price:</Text>
+              </View>
+              <View style={[styles.column, { alignItems: "flex-end" }]}>
+                <Text>{coinData.market_data.current_price.usd} $</Text>
+              </View>
+            </View>
+            <View style={styles.row}>
+              <View style={[styles.column, { alignItems: "flex-start" }]}>
+                <Text style={styles.label}>Market Price:</Text>
+              </View>
+              <View style={[styles.column, { alignItems: "flex-end" }]}>
+                <Text>{coinData.market_data.market_cap.usd}</Text>
+              </View>
+            </View>
+            <View style={styles.row}>
+              <View style={[styles.column, { alignItems: "flex-start" }]}>
+                <Text style={styles.label}>Volume24h:</Text>
+              </View>
+              <View style={[styles.column, { alignItems: "flex-end" }]}>
+                <Text>{coinData.market_data.total_volume.usd} $</Text>
+              </View>
+            </View>
+            <View style={styles.row}>
+              <View style={[styles.column, { alignItems: "flex-start" }]}>
+                <Text style={styles.label}>Total Supply:</Text>
+              </View>
+              <View style={[styles.column, { alignItems: "flex-end" }]}>
+                <Text>{coinData.market_data.total_supply}</Text>
+              </View>
+            </View>
+            <View style={styles.row}>
+              <View style={[styles.column, { alignItems: "flex-start" }]}>
+                <Text style={styles.label}>Max Supply:</Text>
+              </View>
+              <View style={[styles.column, { alignItems: "flex-end" }]}>
+                <Text>{coinData.market_data.max_supply} </Text>
+              </View>
+            </View>
           </View>
         </View>
-        <View style={styles.profile}>
-          <View style={styles.row}>
-            <View style={[styles.column, { alignItems: "flex-start" }]}>
-              <Text style={styles.label}>Current Price:</Text>
-            </View>
-            <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>{crypto?.current_price} $</Text>
-            </View>
-          </View>
-          <View style={styles.row}>
-            <View style={[styles.column, { alignItems: "flex-start" }]}>
-              <Text style={styles.label}>Market Price:</Text>
-            </View>
-            <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>{crypto.market_cap}</Text>
-            </View>
-          </View>
-          <View style={styles.row}>
-            <View style={[styles.column, { alignItems: "flex-start" }]}>
-              <Text style={styles.label}>Volume24h:</Text>
-            </View>
-            <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>{crypto.total_volume} $</Text>
-            </View>
-          </View>
-          <View style={styles.row}>
-            <View style={[styles.column, { alignItems: "flex-start" }]}>
-              <Text style={styles.label}>Total Supply:</Text>
-            </View>
-            <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>{crypto.total_supply}</Text>
-            </View>
-          </View>
-          <View style={styles.row}>
-            <View style={[styles.column, { alignItems: "flex-start" }]}>
-              <Text style={styles.label}>Max Supply:</Text>
-            </View>
-            <View style={[styles.column, { alignItems: "flex-end" }]}>
-              <Text>{crypto.max_supply} </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
+
 const styles = StyleSheet.create({
   paddingContainer: {
     padding: 16,
@@ -116,9 +172,7 @@ const styles = StyleSheet.create({
     color: "white",
     borderRadius: 3,
   },
-  profile: {
-    marginTop: "60%",
-  },
+
   row: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -1,33 +1,62 @@
+// TrendingContextProvider.js
 import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
 
 export const TrendingContext = createContext();
 
 export const TrendingContextProvider = ({ children }) => {
-  const [trendingCoin, setTrendingCoin] = useState([]);
-  const [isLoading, setLoading] = useState(false);
-  const [currency, setCurrency] = useState("usd");
+  const [coinList, setCoinList] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [currency, setCurrency] = useState("usd");
 
-  const TrendingCoin = async (currency) => {
-    setLoading(true);
-    const fetchCoin = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`
-    );
-    const response = fetchCoin.data;
-    setTrendingCoin(response);
-    setLoading(false);
+  const fetchTrendingCoin = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+      );
+      const data = await response.json();
+      setCoinList(data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setError(error.message); // Update error state with error message
+    }
+  };
+
+  const fetchCoinDescription = async (coinId) => {
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${coinId}`
+      );
+      const data = await response.json();
+
+      return data; // Return the fetched data
+    } catch (error) {
+      console.error(error);
+      throw new Error(error.message); // Rethrow the error with error message
+    }
   };
 
   useEffect(() => {
-    TrendingCoin(currency);
-  }, []);
+    fetchTrendingCoin();
+  }, [currency]);
 
   return (
     <TrendingContext.Provider
-      value={{ trendingCoin, currency, isLoading, error }}
+      value={{
+        isLoading,
+        currency,
+        error,
+        coinList,
+        setCurrency,
+        fetchCoinDescription,
+      }}
     >
       {children}
     </TrendingContext.Provider>
   );
 };
+
+export default TrendingContextProvider;

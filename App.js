@@ -86,7 +86,11 @@ export default function App() {
               <Tab.Screen
                 name="Wallet"
                 component={WalletNavigation}
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: false,
+                  tabBarLabel: "Wallet", // Set the label for the "Wallet" tab
+                }}
+                // Set the label for the "Wallet" tab
               />
 
               <Tab.Screen name="Book" component={BookList} />

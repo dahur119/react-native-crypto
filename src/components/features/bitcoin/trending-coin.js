@@ -8,7 +8,7 @@
 //   // const [currentIndex, setCurrentIndex] = useState(0);
 
 //   // const FilteredCoin = coin.splice(0, 1);
-//   // console.log(FilteredCoin);
+//   // git commit -m "your commit message"(FilteredCoin);
 
 //   const scrollViewRef = useRef(null);
 

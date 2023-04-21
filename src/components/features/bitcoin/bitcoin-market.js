@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
 
 export const BitcoinMarket = ({ crypto }) => {
@@ -8,7 +7,9 @@ export const BitcoinMarket = ({ crypto }) => {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.leftContent}>
+          {/* <Image source={{ uri: crypto.image }} style={styles.circle} /> */}
           <Image source={{ uri: crypto.image }} style={styles.circle} />
+
           <View>
             <Text>{crypto.name}</Text>
             <Text>{crypto.symbol}</Text>
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: "red",
+    backgroundColor: "transparent", // Set background color to transparent
     marginRight: 10,
   },
 });
